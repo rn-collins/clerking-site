@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clerking — Fractional Law Clerk Marketplace</title>
+<meta name="description" content="Clerking connects solo and small firm attorneys with supervised law students for research, drafting, and document review — nationally, at $30–45/hr.">
+<!-- UPDATE: Replace rn@rncollins.com throughout with your actual contact email before going live -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Plus Jakarta Sans',sans-serif;color:#111827;background:#fff;-webkit-font-smoothing:antialiased}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;height:auto} /* ─── ANNOUNCEMENT BAR ─── */
+.announce{background:#1e3a5f;color:#93c5fd;text-align:center;padding:10px 1.5rem;font-size:13px;font-weight:500;line-height:1.4}
+.announce a{color:#60a5fa;margin-left:10px;font-weight:700;border-bottom:1px solid rgba(96,165,250.4)}
+.announce a:hover{border-color:#60a5fa} /* ─── NAV ─── */
+nav{background:#111827;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;border-bottom:1px solid #1e293b}
+.nav-logo{color:#fff;font-weight:700;font-size:17px;letter-spacing:0.04em}
+.nav-links{display:flex;align-items:center;gap:1.75rem}
+.nav-link{color:#94a3b8;font-size:13px;font-weight:500;transition:color .15s}
+.nav-link:hover{color:#e2e8f0}
+.nav-cta{background:#3b82f6;color:#fff!important;padding:9px 20px;border-radius:7px;font-size:13px;font-weight:600;transition:background .15s}
+.nav-cta:hover{background:#2563eb!important} /* ─── HERO ─── */
+.hero{background:#0f172a;padding:5.5rem 2rem 5rem;text-align:center}
+.hero-badge{display:inline-block;background:rgba(59,130,246.12);color:#93c5fd;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:7px 16px;border-radius:30px;margin-bottom:1.75rem;border:1px solid rgba(59,130,246.25)}
+.hero h1{font-family:'DM Serif Display',serif;font-size:56px;color:#fff;line-height:1.1;margin-bottom:1.5rem;max-width:800px;margin-left:auto;margin-right:auto}
+.hero h1 em{font-style:italic;color:#93c5fd}
+.hero-sub{font-size:18px;color:#94a3b8;max-width:580px;margin:0 auto 2.75rem;line-height:1.75}
+.btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.btn-blue{background:#3b82f6;color:#fff;padding:15px 30px;border-radius:9px;font-size:15px;font-weight:600;transition:background .15s;display:inline-block}
+.btn-blue:hover{background:#2563eb}
+.btn-ghost{border:1.5px solid #334155;color:#cbd5e1;padding:15px 30px;border-radius:9px;font-size:15px;font-weight:600;transition:all .15s;display:inline-block}
+.btn-ghost:hover{border-color:#475569;color:#f1f5f9} /* ─── STATS ─── */
+.stats{background:#1e293b;border-top:1px solid #334155;padding:1.75rem 2rem;display:flex;justify-content:center;gap:5rem;flex-wrap:wrap}
+.stat-item{text-align:center}
+.stat-num{font-size:24px;font-weight:700;color:#f8fafc;margin-bottom:4px}
+.stat-label{font-size:11px;color:#64748b;font-weight:500;text-transform:uppercase;letter-spacing:.05em} /* ─── CRED STRIP ─── */
+.cred-strip{background:#f8fafc;border-top:1px solid #f1f5f9;border-bottom:1px solid #f1f5f9;padding:1.1rem 2rem;display:flex;align-items:center;justify-content:center;gap:1.75rem;flex-wrap:wrap}
+.cred-strip-label{font-size:11px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:.08em}
+.cred-strip-item{font-size:13px;font-weight:600;color:#6b7280}
+.cred-sep{color:#d1d5db;font-size:11px} /* ─── SHARED LAYOUT ─── */
+.wrap{max-width:1000px;margin:0 auto}
+.section{padding:5rem 2rem}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#3b82f6;margin-bottom:14px}
+h2.title{font-family:'DM Serif Display',serif;font-size:40px;color:#111827;line-height:1.2;margin-bottom:1rem}
+.lead{font-size:17px;color:#4b5563;line-height:1.75;max-width:640px;margin-bottom:2.5rem}
+.hr{border:none;border-top:1px solid #f1f5f9} /* ─── PROBLEM ─── */
+.problem-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-bottom:4rem}
+.problem-card{background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:1.75rem 1.5rem}
+.problem-icon{font-size:30px;margin-bottom:1rem;display:block}
+.problem-card h3{font-size:15px;font-weight:700;color:#111827;margin-bottom:8px;line-height:1.4}
+.problem-card p{font-size:13.5px;color:#6b7280;line-height:1.65} /* ─── HOW IT WORKS ─── */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:2.5rem}
+.step-num{width:42px;height:42px;background:#eff6ff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:#3b82f6;margin-bottom:1rem}
+.step-card h3{font-size:16px;font-weight:700;color:#111827;margin-bottom:8px}
+.step-card p{font-size:14px;color:#6b7280;line-height:1.65} /* ─── TASKS ─── */
+.tasks-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;max-width:760px}
+.task-item{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;background:#f8fafc;border:1px solid #e5e7eb;border-radius:10px}
+.task-icon{font-size:20px;flex-shrink:0;margin-top:2px}
+.task-text{font-size:14px;font-weight:600;color:#1f2937;line-height:1.3}
+.task-text small{font-size:12px;font-weight:400;color:#9ca3af;display:block;margin-top:3px;line-height:1.4} /* ─── PRICING ─── */
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:16px}
+.price-card{border:1px solid #e5e7eb;border-radius:14px;padding:1.75rem}
+.price-card.featured{border:2px solid #3b82f6}
+.badge{background:#eff6ff;color:#2563eb;font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;display:inline-block;margin-bottom:12px}
+.badge.new-badge{background:#fefce8;color:#b45309}
+.price-card h3{font-size:17px;font-weight:700;color:#111827;margin-bottom:14px}
+.price-amount{font-size:36px;font-weight:800;color:#111827;line-height:1;margin-bottom:20px}
+.price-amount span{font-size:14px;font-weight:400;color:#9ca3af}
+.features{list-style:none}
+.features li{font-size:13px;color:#4b5563;padding:7px 0;display:flex;align-items:flex-start;gap:9px;border-bottom:1px solid #f9fafb}
+.features li:last-child{border-bottom:none}
+.chk{color:#3b82f6;font-weight:700;flex-shrink:0}
+.price-note{font-size:12px;color:#9ca3af;margin-top:14px;font-style:italic}
+.single-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;border:1px solid #e5e7eb;border-radius:12px;padding:1.25rem 1.5rem;background:#fff;margin-bottom:12px}
+.single-row h3{font-size:15px;font-weight:700;color:#111827;margin-bottom:4px}
+.single-row p{font-size:13px;color:#6b7280}
+.single-row .price-lg{font-size:28px;font-weight:800;color:#111827}
+.fgc-row{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:1.5rem;background:#fffbeb;border:1px solid #fde68a;border-radius:12px;padding:1.5rem;margin-bottom:12px}
+.fgc-row h3{font-size:15px;font-weight:700;color:#92400e;margin-bottom:6px}
+.fgc-row p{font-size:13px;color:#78350f;line-height:1.65;max-width:520px}
+.fgc-price{font-size:26px;font-weight:800;color:#92400e;white-space:nowrap}
+.fgc-price span{font-size:13px;font-weight:400}
+.fgc-cta{display:inline-block;margin-top:10px;background:#92400e;color:#fff;padding:9px 18px;border-radius:7px;font-size:13px;font-weight:600;transition:background .15s}
+.fgc-cta:hover{background:#78350f}
+.billing-strip{display:flex;align-items:center;justify-content:center;gap:1.5rem;flex-wrap:wrap;border:1px solid #e5e7eb;border-radius:12px;padding:1.25rem 2rem;background:#f9fafb;margin-bottom:12px;text-align:center}
+.bs-item p:first-child{font-size:13px;font-weight:600;color:#374151;margin-bottom:3px}
+.bs-item p:last-child{font-size:11px;color:#9ca3af}
+.bs-arrow{color:#d1d5db;font-size:22px}
+.founding-banner{background:#0f172a;border:1px solid #1d4ed8;border-radius:12px;padding:1.5rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.founding-banner h3{color:#f8fafc;font-size:16px;font-weight:700;margin-bottom:4px}
+.founding-banner p{color:#94a3b8;font-size:13px;line-height:1.55;max-width:520px}
+.founding-banner a{background:#1d4ed8;color:#fff;padding:11px 22px;border-radius:7px;font-size:14px;font-weight:600;white-space:nowrap;display:inline-block;transition:background .15s}
+.founding-banner a:hover{background:#1e40af}
+.legal-note{font-size:12px;color:#9ca3af;margin-top:1rem;text-align:center;line-height:1.6} /* ─── STUDENTS ─── */
+.student-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;max-width:700px;margin-bottom:2.5rem}
+.student-card{border:1px solid #e5e7eb;border-radius:14px;padding:1.75rem;background:#fff}
+.student-card.featured{border:2px solid #3b82f6}
+.student-tier-label{font-size:11px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+.resource-pills{display:flex;flex-wrap:wrap;gap:8px}
+.pill{background:#f3f4f6;border:1px solid #e5e7eb;color:#374151;font-size:12px;font-weight:500;padding:6px 14px;border-radius:20px}
+.pill.hi{background:#f0fdf4;border-color:#bbf7d0;color:#166534} /* ─── ABOUT ─── */
+.about-section{background:#111827;padding:5rem 2rem}
+.about-inner{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:300px 1fr;gap:4rem;align-items:start}
+.about-photo-wrap{background:#1e293b;border-radius:16px;border:1px solid #334155;aspect-ratio:4/5;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px}
+.about-photo-wrap p{font-size:12px;color:#475569;text-align:center;line-height:1.5}
+.about-eyebrow{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#3b82f6;margin-bottom:12px}
+.about-name{font-family:'DM Serif Display',serif;font-size:34px;color:#f8fafc;line-height:1.15;margin-bottom:8px}
+.about-title{font-size:14px;color:#60a5fa;font-weight:500;margin-bottom:1.75rem;line-height:1.65}
+.about-quote{font-family:'DM Serif Display',serif;font-style:italic;font-size:18px;color:#e2e8f0;line-height:1.65;border-left:3px solid #3b82f6;padding-left:1.25rem;margin-bottom:2rem}
+.about-bio{font-size:14.5px;color:#94a3b8;line-height:1.75;margin-bottom:1.25rem}
+.about-bio strong{color:#e2e8f0;font-weight:600}
+.creds{display:flex;flex-direction:column;gap:10px;margin-top:1.5rem}
+.cred-row{display:flex;align-items:flex-start;gap:12px}
+.cred-dot{width:6px;height:6px;background:#3b82f6;border-radius:50%;flex-shrink:0;margin-top:7px}
+.cred-text{font-size:13px;color:#94a3b8;line-height:1.55}
+.cred-text strong{color:#cbd5e1;font-weight:600} /* ─── FAQ ─── */
+.faq-list{max-width:780px}
+.faq-item{border-bottom:1px solid #f1f5f9}
+.faq-q{width:100%;text-align:left;background:none;border:none;padding:1.25rem 0;display:flex;align-items:center;justify-content:space-between;cursor:pointer;gap:1rem;font-family:'Plus Jakarta Sans',sans-serif}
+.faq-q-text{font-size:15px;font-weight:600;color:#111827;line-height:1.4}
+.faq-icon{width:26px;height:26px;border-radius:50%;background:#f3f4f6;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:15px;color:#6b7280;transition:all .2s;font-weight:400}
+.faq-item.open .faq-icon{background:#eff6ff;color:#3b82f6;transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.faq-a-inner{padding:0 0 1.25rem;font-size:14px;color:#4b5563;line-height:1.75}
+.faq-a-inner strong{color:#111827;font-weight:600} /* ─── CTA SECTION ─── */
+.cta-section{background:#1d4ed8;padding:5rem 2rem}
+.cta-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;max-width:900px;margin:0 auto}
+.cta-card{background:rgba(255,255,255.08);border:1px solid rgba(255,255,255.15);border-radius:16px;padding:2.5rem}
+.cta-card h3{font-family:'DM Serif Display',serif;font-size:28px;color:#fff;margin-bottom:10px}
+.cta-card p{font-size:14px;color:#bfdbfe;line-height:1.7;margin-bottom:1.5rem}
+.btn-white{background:#fff;color:#1d4ed8;padding:13px 26px;border-radius:8px;font-size:14px;font-weight:700;display:inline-block;transition:background .15s}
+.btn-white:hover{background:#eff6ff}
+.btn-outline-white{border:1.5px solid rgba(255,255,255.4);color:#fff;padding:13px 26px;border-radius:8px;font-size:14px;font-weight:600;display:inline-block;transition:all .15s}
+.btn-outline-white:hover{background:rgba(255,255,255.08)} /* ─── FOOTER ─── */
+footer{background:#0f172a;padding:2.5rem 2rem}
+.footer-inner{max-width:1000px;margin:0 auto;display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:2rem}
+.footer-logo{color:#fff;font-weight:700;font-size:16px;letter-spacing:.04em;display:block;margin-bottom:8px}
+.footer-brand p{color:#475569;font-size:13px;line-height:1.7;max-width:320px}
+.footer-brand a{color:#475569;transition:color .15s}
+.footer-brand a:hover{color:#94a3b8}
+.footer-links-col h4{color:#94a3b8;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px}
+.footer-links-col a{display:block;font-size:13px;color:#475569;margin-bottom:6px;transition:color .15s}
+.footer-links-col a:hover{color:#94a3b8}
+.footer-bottom{max-width:1000px;margin:1.5rem auto 0;padding-top:1.5rem;border-top:1px solid #1e293b;font-size:11px;color:#334155;line-height:1.7;text-align:center} /* ─── RESPONSIVE ─── */
+@media(max-width:768px){ .hero h1{font-size:38px} .hero-sub{font-size:16px} .problem-grid{grid-template-columns:1fr} .steps{grid-template-columns:1fr} .pricing-grid{grid-template-columns:1fr} .about-inner{grid-template-columns:1fr} .about-photo-wrap{aspect-ratio:16/9;max-height:200px} .cta-grid{grid-template-columns:1fr} .student-grid{grid-template-columns:1fr} .tasks-grid{grid-template-columns:1fr} .stats{gap:2.5rem} .billing-strip{flex-direction:column;gap:0.75rem} .bs-arrow{transform:rotate(90deg)} .nav-link{display:none} .nav-cta{display:block!important} .hero{padding:4rem 1.5rem 3.5rem} .section{padding:3.5rem 1.5rem} .fgc-row{flex-direction:column} .founding-banner{flex-direction:column}
+}
+
+/* ─── SCROLL ANIMATIONS ─── */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-delay-1{transition-delay:.1s}
+.reveal-delay-2{transition-delay:.2s}
+.reveal-delay-3{transition-delay:.3s}
+.stat-num{transition:all .1s}
+
+/* ─── PRICING CARD HOVER ─── */
+.price-card{transition:transform .18s ease,box-shadow .18s ease}
+.price-card:hover{transform:translateY(-4px);box-shadow:0 8px 30px rgba(0,0,0,.08)}
+.price-card.featured:hover{box-shadow:0 8px 30px rgba(59,130,246,.15)}
+
+/* ─── ANNUAL TOGGLE ─── */
+.billing-toggle{display:flex;align-items:center;gap:12px;justify-content:center;margin-bottom:2rem}
+.toggle-label{font-size:14px;font-weight:500;color:#6b7280}
+.toggle-label.active{color:#111827;font-weight:600}
+.toggle-switch{width:48px;height:26px;background:#d1d5db;border-radius:13px;position:relative;cursor:pointer;transition:background .2s}
+.toggle-switch.on{background:#3b82f6}
+.toggle-switch::after{content:'';width:20px;height:20px;background:#fff;border-radius:50%;position:absolute;top:3px;left:3px;transition:transform .2s}
+.toggle-switch.on::after{transform:translateX(22px)}
+.save-badge{background:#f0fdf4;color:#166534;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;border:1px solid #bbf7d0}
+.annual-note{display:none;font-size:11px;color:#3b82f6;font-weight:500;text-align:center;margin-top:-1rem;margin-bottom:1.5rem}
+.annual-note.show{display:block}
+
+/* ─── TEAM PLANS ─── */
+.team-banner{background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 100%);border-radius:14px;padding:2rem;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem}
+.team-banner h3{color:#f8fafc;font-size:18px;font-weight:700;margin-bottom:6px}
+.team-banner p{color:#94a3b8;font-size:13px;line-height:1.65;max-width:480px}
+.team-plans-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:1rem}
+.team-plan{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:1rem 1.25rem}
+.team-plan h4{color:#f8fafc;font-size:14px;font-weight:600;margin-bottom:4px}
+.team-plan p{color:#64748b;font-size:12px;line-height:1.55}
+.team-plan .tprice{color:#60a5fa;font-size:20px;font-weight:700;margin-top:6px}
+
+/* ─── REFERRAL ─── */
+.referral-strip{background:#fafafa;border:1px solid #e5e7eb;border-radius:12px;padding:1.5rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-top:12px}
+.referral-strip h3{font-size:15px;font-weight:700;color:#111827;margin-bottom:4px}
+.referral-strip p{font-size:13px;color:#6b7280;max-width:480px;line-height:1.6}
+.referral-strip a{background:#111827;color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:600;white-space:nowrap;text-decoration:none}
+
+/* ─── TESTIMONIALS ─── */
+.testimonials-section{background:#f8fafc;padding:5rem 2rem}
+.testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.testimonial-card{background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:1.75rem}
+.testimonial-quote{font-family:'DM Serif Display',serif;font-style:italic;font-size:15px;color:#374151;line-height:1.7;margin-bottom:1.25rem;border-left:3px solid #3b82f6;padding-left:1rem}
+.testimonial-author{display:flex;align-items:center;gap:10px}
+.author-avatar{width:38px;height:38px;border-radius:50%;background:#eff6ff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#3b82f6;flex-shrink:0}
+.author-name{font-size:13px;font-weight:600;color:#111827}
+.author-role{font-size:11px;color:#9ca3af}
+.testimonial-placeholder{border:1.5px dashed #d1d5db;border-radius:14px;padding:1.75rem;display:flex;align-items:center;justify-content:center;text-align:center}
+.testimonial-placeholder p{font-size:13px;color:#9ca3af;font-style:italic}
+
+/* ─── CASE STUDY ─── */
+.case-study-section{padding:5rem 2rem;background:#fff}
+.case-study-card{border:1px solid #e5e7eb;border-radius:14px;overflow:hidden;max-width:880px}
+.case-study-header{background:#0f172a;padding:1.25rem 1.75rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.case-study-header h3{color:#f8fafc;font-size:15px;font-weight:700}
+.case-study-badge{background:rgba(59,130,246,.2);color:#93c5fd;font-size:10px;font-weight:700;padding:4px 10px;border-radius:20px;letter-spacing:.06em;text-transform:uppercase}
+.case-study-body{padding:1.75rem}
+.case-study-meta{display:flex;gap:2rem;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid #f1f5f9}
+.meta-item{font-size:12px;color:#6b7280}<span class="meta-label"> — not needed </span>
+.meta-label{font-weight:600;color:#374151}
+.case-study-section-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#3b82f6;margin-bottom:8px}
+.case-study-content{font-size:13px;color:#374151;line-height:1.75;background:#f8fafc;border-radius:8px;padding:1rem 1.25rem;border-left:3px solid #e5e7eb;font-family:'Courier New',monospace}
+
+/* ─── VIDEO SECTION ─── */
+.video-section{background:#0f172a;padding:5rem 2rem;text-align:center}
+.video-container{max-width:720px;margin:0 auto}
+.video-embed{background:#1e293b;border-radius:14px;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;border:1px solid #334155;cursor:pointer;position:relative;overflow:hidden}
+.video-play{width:72px;height:72px;background:rgba(59,130,246,.9);border-radius:50%;display:flex;align-items:center;justify-content:center}
+.video-play::after{content:'';width:0;height:0;border-style:solid;border-width:12px 0 12px 22px;border-color:transparent transparent transparent #fff;margin-left:4px}
+.video-caption{margin-top:1rem;font-size:13px;color:#64748b}
+
+/* ─── BLOG SECTION ─── */
+.blog-section{padding:5rem 2rem;background:#f8fafc}
+.blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+.blog-card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:1.5rem;transition:transform .18s ease}
+.blog-card:hover{transform:translateY(-3px)}
+.blog-tag{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#3b82f6;margin-bottom:10px}
+.blog-card h3{font-size:15px;font-weight:700;color:#111827;margin-bottom:8px;line-height:1.4}
+.blog-card p{font-size:13px;color:#6b7280;line-height:1.65}
+.blog-card a{display:inline-block;margin-top:.85rem;font-size:12px;font-weight:600;color:#3b82f6;text-decoration:none}
+
+/* ─── MEDIA RESPONSIVE ADDITIONS ─── */
+@media(max-width:768px){
+  .testimonials-grid,.blog-grid,.team-plans-grid{grid-template-columns:1fr}
+  .team-banner,.referral-strip{flex-direction:column}
+}
+
+</style>
+</head>
+<body> <!-- ─── ANNOUNCEMENT BAR ─── -->
+<div class="announce"> Now accepting the founding attorney cohort — 20 spots · locked pricing for life <a href="#pricing">See plans →</a>
+</div> <!-- ─── NAV ─── -->
+<nav> <span class="nav-logo">Clerking</span> <div class="nav-links"> <a href="#attorneys" class="nav-link">For attorneys</a> <a href="#what-clerks-do" class="nav-link">What clerks do</a> <a href="#pricing" class="nav-link">Pricing</a> <a href="#students" class="nav-link">For students</a> <a href="#about" class="nav-link">About</a> <a href="#faq" class="nav-link">FAQ</a> <a href="mailto:rn@rncollins.com?subject=Clerking — Get Started" class="nav-link nav-cta">Join the waitlist</a> </div>
+</nav> <!-- ─── HERO ─── -->
+<section class="hero"> <div class="hero-badge">Founding attorney cohort — 20 spots available</div> <h1>Vetted law students.<br><em>Real</em> legal work.<br>No hiring overhead.</h1> <p class="hero-sub">Clerking connects solo and small firm attorneys with supervised law students for research, drafting, and document review — nationally, at $30–45/hr.</p> <div class="btns"> <a href="mailto:rn@rncollins.com?subject=Clerking — Attorney Inquiry" class="btn-blue">Join founding cohort</a> <a href="#students" class="btn-ghost">Join as a student</a> </div>
+</section> <!-- ─── STATS ─── -->
+<div class="stats"> <div class="stat-item reveal"> <div class="stat-num">7</div> <div class="stat-label">Positions secured as a 1L — 0 job boards</div> </div> <div class="stat-item reveal"> <div class="stat-num">2,862</div> <div class="stat-label">Attorney network connections</div> </div> <div class="stat-item reveal"> <div class="stat-num">26%</div> <div class="stat-label">Cold reply rate — attorney outreach</div> </div> <div class="stat-item reveal"> <div class="stat-num">$30–45/hr</div> <div class="stat-label">Student clerk rate vs. $288/hr billing</div> </div>
+</div> <!-- ─── CREDIBILITY STRIP ─── -->
+<div class="cred-strip"> <span class="cred-strip-label">Founder credentials</span> <span class="cred-strip-item">University of Pennsylvania BA '15</span> <span class="cred-sep">·</span> <span class="cred-strip-item">BU School of Medicine MS Neurobiology '24</span> <span class="cred-sep">·</span> <span class="cred-strip-item">Northeastern Law JD '29</span> <span class="cred-sep">·</span> <span class="cred-strip-label">Published at</span> <span class="cred-strip-item">Cannabis Law Report</span> <span class="cred-sep">·</span> <span class="cred-strip-item">Fat Nugs Magazine</span> <span class="cred-sep">·</span> <span class="cred-strip-item">Journal of Biophilic Design</span>
+</div> <hr class="hr"> <!-- ─── FOR ATTORNEYS + HOW IT WORKS ─── -->
+<section class="section" id="attorneys"> <div class="wrap"> <div class="eyebrow">For attorneys</div> <h2 class="title">The research doesn't stop.<br>Your bandwidth does.</h2> <p class="lead">Solo and small firm attorneys lose 10+ hours a week to research and drafting they could delegate. Clerking gives you on-demand access to supervised law students — vetted, confidentiality-trained, and ready to work.</p> <div class="problem-grid"> <div class="problem-card reveal"> <span class="problem-icon">⏰</span> <h3>Your time is worth $288/hr. Your research tasks aren't.</h3> <p>Solo attorneys routinely do $50/hr research work themselves because there's no practical alternative. Every hour you spend on research is an hour you're not billing to clients — or sleeping.</p> </div> <div class="problem-card reveal"> <span class="problem-icon">💸</span> <h3>Hiring a full-time associate isn't the answer.</h3> <p>Associates cost $80K+ per year before benefits, take months to onboard, and require consistent work. Your workload fluctuates — you don't need someone 40 hours a week, every week, indefinitely.</p> </div> <div class="problem-card reveal"> <span class="problem-icon">🔍</span> <h3>General temp staffing doesn't understand legal work.</h3> <p>Staffing agencies send you people who need a three-hour brief on what a motion is. Clerking students are in law school right now. They know Westlaw. They know Bluebook. They know what you need.</p> </div> </div> <div class="eyebrow" style="margin-bottom:1.5rem">How it works</div> <div class="steps"> <div class="step-card reveal"> <div class="step-num">1</div> <h3>Post your need</h3> <p>Subscribe for ongoing clerk access or post a single project for $350. Tell us your practice area, work type, and timeline. We take it from there.</p> </div> <div class="step-card reveal"> <div class="step-num">2</div> <h3>Meet your clerk</h3> <p>We introduce you to a vetted, confidentiality-trained law student matched to your practice area. You review their profile and confirm fit before anyone starts work.</p> </div> <div class="step-card reveal"> <div class="step-num">3</div> <h3>Get the work done</h3> <p>You supervise under ABA Model Rule 5.3. The student delivers. You pay them directly at $30–45/hr under a separate engagement letter. Clerking stays out of the transaction.</p> </div> </div> </div>
+</section> <hr class="hr"> <!-- ─── WHAT CLERKS DO ─── -->
+<section class="section" style="background:#f8fafc" id="what-clerks-do"> <div class="wrap"> <div class="eyebrow">What clerks can do</div> <h2 class="title">10 tasks you can delegate<br>starting this week.</h2> <p class="lead">Research, drafting, review — the back-office work that backs up your practice. Students handle these tasks while you maintain full attorney-of-record control.</p> <div class="tasks-grid"> <div class="task-item reveal"> <span class="task-icon">⚖️</span> <div class="task-text">Legal research memos<small>Federal + state court, any jurisdiction, issue-specific</small></div> </div> <div class="task-item reveal"> <span class="task-icon">📚</span> <div class="task-text">Case law analysis + synthesis<small>Issue-spotting, rule extraction, fact application</small></div> </div> <div class="task-item reveal"> <span class="task-icon">🌿</span> <div class="task-text">Cannabis + regulatory research<small>Scheduling, licensing, state-by-state compliance — our specialty</small></div> </div> <div class="task-item reveal"> <span class="task-icon">📋</span> <div class="task-text">Contract review + redlining<small>NDA, MSA, SaaS terms, employment agreements</small></div> </div> <div class="task-item reveal"> <span class="task-icon">📝</span> <div class="task-text">Draft motions + briefs<small>Argument shells, opposition structures, supporting sections</small></div> </div> <div class="task-item reveal"> <span class="task-icon">🗂️</span> <div class="task-text">Document review + organization<small>Chronologies, privilege logs, production prep, Bates review</small></div> </div> <div class="task-item reveal"> <span class="task-icon">📊</span> <div class="task-text">Deposition digests<small>Testimony summaries, key admissions, timeline extraction</small></div> </div> <div class="task-item reveal"> <span class="task-icon">📞</span> <div class="task-text">Client intake summaries<small>Organize facts, flag legal issues, draft structured summaries</small></div> </div> <div class="task-item reveal"> <span class="task-icon">🔎</span> <div class="task-text">Bluebook cite-checking<small>Full citation verification before anything goes out the door</small></div> </div> <div class="task-item reveal"> <span class="task-icon">📑</span> <div class="task-text">MSJ research packages<small>Undisputed fact packages with full record citations and supporting memos</small></div> </div> </div> </div>
+</section> <hr class="hr"> <!-- ─── PRICING ─── -->
+<section class="section" id="pricing"> <div class="wrap"> <div class="eyebrow">Attorney pricing</div> <h2 class="title">Plans for every practice size.</h2> <p class="lead">All subscriptions are month-to-month. No long-term commitment. Cancel anytime. You pay Clerking for matchmaking. You pay the student directly for their time.</p> <div class="pricing-grid"> <div class="price-card reveal"> <h3>Starter</h3> <div class="price-amount" id="price-starter"><span class="price-display">$149</span><span class="price-period">/mo</span></div><div style="font-size:11px;color:#9ca3af;display:none" class="annual-price" data-monthly="149" data-annual="1241">$1,241/yr · <strong style='color:#166534'>saves $546</strong></div> <ul class="features"> <li><span class="chk">✓</span> 1 active clerk</li> <li><span class="chk">✓</span> Unlimited job postings</li> <li><span class="chk">✓</span> Matched within 2–3 business days at activation</li> <li><span class="chk">✓</span> Engagement letter template</li> <li><span class="chk">✓</span> Cancel anytime</li> </ul> <p class="price-note">Best for: solo practitioners</p> </div> <div class="price-card featured reveal reveal-delay-1"> <span class="badge">Most popular</span> <h3>Pro</h3> <div class="price-amount" id="price-pro"><span class="price-display">$249</span><span class="price-period">/mo</span></div><div style="font-size:11px;color:#9ca3af;display:none" class="annual-price" data-monthly="249" data-annual="2490">$2,490/yr · <strong style='color:#166534'>saves $498</strong></div> <ul class="features"> <li><span class="chk">✓</span> 2 active clerks</li> <li><span class="chk">✓</span> 24–48 hour priority matching</li> <li><span class="chk">✓</span> Quarterly call with RN (1×/quarter)</li> <li><span class="chk">✓</span> First access to new student talent</li> </ul> <p class="price-note">Best for: boutique + small firms</p> </div> <div class="price-card reveal"> <span class="badge new-badge">New</span> <h3>Elite</h3> <div class="price-amount" id="price-elite"><span class="price-display">$399</span><span class="price-period">/mo</span></div><div style="font-size:11px;color:#9ca3af;display:none" class="annual-price" data-monthly="399" data-annual="3990">$3,990/yr · <strong style='color:#166534'>saves $798</strong></div> <ul class="features"> <li><span class="chk">✓</span> 3 active clerks (exactly — 4+ is custom PBD)</li> <li><span class="chk">✓</span> Within 24 hours</li> <li><span class="chk">✓</span> Monthly video call with RN Collins (1×/month)</li> <li><span class="chk">✓</span> Priority 3L + niche practice access</li> </ul> <p class="price-note">Best for: mid-tier firms + in-house teams</p> </div> </div> <div style="border:0.5px dashed #e5e7eb;border-radius:12px;padding:1rem 1.5rem;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px"> <div><p style="font-size:15px;font-weight:700;color:#111827;margin-bottom:4px">4+ active clerks — custom team engagement</p><p style="font-size:13px;color:#6b7280">Assembling a multi-clerk team across practice areas requires a direct conversation. Pricing per engagement.</p></div> <a href="mailto:rn@rncollins.com?subject=Clerking — Custom Team Engagement" style="background:#111827;color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;white-space:nowrap">Contact RN →</a> </div> <div class="single-row"> <div> <h3>Single posting</h3> <p>One job posted for 30 days · matched within 2–3 business days · engagement letter template included · no ongoing check-in · ideal for testing before subscribing</p> </div> <div class="price-lg">$350</div> </div> <div class="fgc-row"> <div> <h3>Fractional GC Lite — for lean in-house teams</h3> <p>15–20 hrs/week of dedicated 2L/3L support matched to your practice area and business needs. No headcount, no benefits, no recruiting lag. Built for in-house teams under $10M revenue or pre-Series B companies that need consistent legal capacity without outside counsel rates.</p> </div> <div> <div style="font-size:13px;font-weight:500;color:#92400e;margin-bottom:6px">Contact for pricing</div> <a href="mailto:rn@rncollins.com?subject=Clerking — Fractional GC Lite" class="fgc-cta">Get in touch →</a> </div> </div> <div class="billing-strip"> <div class="bs-item"><p>Attorney pays Clerking</p><p>Subscription or one-time posting fee</p></div> <div class="bs-arrow">→</div> <div class="bs-item"><p>Clerking matches + vets</p><p>Technology + matchmaking only</p></div> <div class="bs-arrow">→</div> <div class="bs-item"><p>Attorney pays student directly</p><p>$30–45/hr · separate engagement letter</p></div> </div> <div class="founding-banner"> <div> <h3>Founding attorney cohort — 20 spots</h3> <p>Reserve your spot now. Founding members lock in pricing for life, guaranteed priority matching, and direct access to RN Collins for the first 90 days. Billing activates when matching goes live. Once the cohort fills, founding pricing closes permanently.</p> </div> <a href="mailto:rn@rncollins.com?subject=Clerking — Founding Cohort">Claim your spot →</a> </div> <p class="legal-note">Clerking is a technology and matchmaking platform only — not a legal services provider. All student work is supervised by the hiring attorney under ABA Model Rule 5.3 or applicable state equivalent. Clerking never directs, instructs, or employs students for legal work.</p> </div>
+</section> <hr class="hr"> <!-- ─── STUDENTS ─── -->
+<section class="section" id="students"> <div class="wrap"> <div class="eyebrow">For law students</div> <h2 class="title">Build your practice-ready portfolio.<br>Earn while you learn.</h2> <p class="lead">Clerking places you with real attorneys doing real work — research, drafting, document review — at $30–45/hr. Not volunteer hours. Not mock projects. Every placement is a paid networking opportunity: income and a professional relationship with a practicing attorney who may become a reference, a mentor, or a pipeline to your next job. Your name is on every deliverable you produce. Only commit to work you are proud of, that reflects your diligence and precision — that standard is what makes a Clerking student worth hiring again. Paid placements with practicing attorneys who need you.</p> <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:960px;margin-bottom:2.5rem"> <div class="student-card"> <div class="student-tier-label">Resource</div> <div class="price-amount">$5<span>/mo</span></div> <ul class="features" style="margin-top:1rem"> <li><span class="chk">✓</span> Legal Research Memo template</li> <li><span class="chk">✓</span> Email Memo template</li> <li><span class="chk">✓</span> Bluebook Citation Quick-Reference</li> <li><span class="chk">✓</span> Job board — browse (read-only)</li> </ul> <p style="font-size:12px;color:#9ca3af;margin-top:12px;font-style:italic">Best for: Students building research skills before seeking placement</p> </div> <div class="student-card featured"> <span class="badge">Member</span> <div class="price-amount">$20<span>/mo</span></div> <ul class="features" style="margin-top:1rem"> <li><span class="chk">✓</span> All 35 templates (every practice area)</li> <li><span class="chk">✓</span> Full job board — RN emails posted opportunities to eligible students</li> <li><span class="chk">✓</span> Apply to postings independently</li> </ul> <p style="font-size:12px;color:#9ca3af;margin-top:12px;font-style:italic">Best for: Students ready to be considered for paid clerk work</p> </div> <div class="student-card"> <span class="badge new-badge">Placement</span> <div class="price-amount">$50<span>/mo</span></div> <ul class="features" style="margin-top:1rem"> <li><span class="chk">✓</span> All 35 templates (every practice area)</li> <li><span class="chk">✓</span> Full job board — apply to postings independently</li> <li><span class="chk">✓</span> RN actively matches you with attorneys (Placement pool)</li> <li><span class="chk">✓</span> Async written profile review by RN — once per semester, submit whatever you want reviewed</li> </ul> <p style="font-size:12px;color:#9ca3af;margin-top:12px;font-style:italic">Best for: Students actively seeking paid clerk work — first in the matching pool at activation</p> </div> </div> <div style="background:#f1f5f9;border-radius:10px;padding:1rem 1.25rem;max-width:960px;margin-bottom:2rem;font-size:13px;color:#6b7280;line-height:1.65"> <strong style="color:#374151">How placement works, honestly:</strong> Placement-tier students ($50/month) are in RN's active matching pool — when an attorney describes what they need, RN selects from this pool and makes the warm introduction. Member-tier students ($20/month) can apply to posted opportunities independently. Resource-tier students can browse but not apply. Resource students can apply directly to visible job board postings. No placement is guaranteed — matching depends on attorney demand, practice area fit, and your availability. Placement tier adds the async written profile review; it does not guarantee earlier or faster placement. </div> <div class="eyebrow" style="margin-bottom:10px">Resource library — included with all memberships</div> <p style="font-size:14px;color:#6b7280;margin-bottom:1.25rem;max-width:640px;line-height:1.65">Practice-area templates built for the work you'll actually do as a clerk. Not exam prep. Real deliverables — structured, formatted, and ready to complete. Resource tier includes the 3 universal templates. Member and Placement tiers include all 35.</p> <div class="resource-pills"> <span class="pill">Universal research memo</span> <span class="pill">Email memo</span> <span class="pill">Client intake summary</span> <span class="pill">Case timeline / chronology</span> <span class="pill">Bluebook quick-reference</span> <span class="pill">Deposition digest</span> <span class="pill">Litigation — MSJ research package</span> <span class="pill">Litigation — motion to compel</span> <span class="pill">Litigation — FRCP 26 checklist</span> <span class="pill">Transactional — NDA (mutual + one-way)</span> <span class="pill">Transactional — MSA template</span> <span class="pill">Transactional — SaaS terms shell</span> <span class="pill hi">🌿 Cannabis — state licensing comparison</span> <span class="pill hi">🌿 Cannabis — DEA scheduling analysis</span> <span class="pill hi">🌿 Cannabis — regulatory research memo</span> <span class="pill hi">🌿 Cannabis — compliance checklist by state</span> <span class="pill">IP — trademark clearance memo</span> <span class="pill">IP — USPTO Office Action shell</span> <span class="pill">Criminal — sentencing memo</span> <span class="pill">Criminal — plea negotiation memo</span> </div> </div>
+</section> <!-- ─── ABOUT ─── -->
+<section class="about-section" id="about"> <div class="about-inner"> <div> <!-- UPDATE: Replace with your actual photo --> <div class="about-photo-wrap"> <p>[ Photo of<br>Rayven-Nikkita Collins ]</p> <p style="font-size:11px;color:#334155">Update src with your photo</p> </div> </div> <div> <div class="about-eyebrow">About the founder</div> <div class="about-name">Rayven-Nikkita Collins</div> <div class="about-title"> Founder, Clerking &middot; 1L, Northeastern University School of Law &mdash; FlexJD Program (part-time) &middot; Expected May 2029<br> BA Psychology, University of Pennsylvania &middot; MS Anatomy &amp; Neurobiology, BU School of Medicine<br> Neuroscientist &middot; 4 peer-reviewed publications &middot; Practicing law clerk </div> <div class="about-quote">&ldquo;I built Clerking because I am a law student doing this work right now &mdash; across seven legal positions simultaneously, in cannabis law, psychedelics regulation, AI legal ops, end-of-life law, and constitutional litigation. I know what supervising attorneys need from a clerk. I know what students can deliver when they&rsquo;re properly supported and matched. That knowledge is the product.&rdquo;</div> <p class="about-bio">I&rsquo;m a <strong>neuroscientist and 1L at Northeastern University School of Law</strong>, where my work sits at the intersection of psychoactive plant medicine, emerging technology, and regulatory law. I secured seven law clerk positions in my 1L year sending 2,274 messages to attorneys in my network &mdash; with a 26% cold reply rate and zero job boards used. I currently serve as a practicing law clerk at two firms while writing for <strong>Cannabis Law Report</strong>, <strong>Fat Nugs Magazine</strong>, and the <strong>Journal of Biophilic Design</strong>.</p> <p class="about-bio">Clerking exists because I saw the gap from both sides simultaneously: attorneys with more research than capacity, and students with more aptitude than opportunity. I built the matching infrastructure, the resource library, and the compliance framework to close that gap &mdash; and to scale it.</p> <div class="creds">
+        <div class="cred-row reveal"><div class="cred-dot"></div><div class="cred-text"><strong>Law clerk (ongoing)</strong> — Gordon Rees Scully Mansukhani LLP · Antithesis Law</div></div>
+        <div class="cred-row reveal"><div class="cred-dot"></div><div class="cred-text"><strong>Law clerk / legal research (project-based, 2025–2026)</strong> — David Sergi (cannabis &amp; hemp constitutional litigation) · Kathryn Tucker (psychedelic-assisted therapy in end-of-life law, 30+ jurisdictions) · Courtney Barnes (FDA drug approval pathways, Texas psychedelics legislation) · David Lopez Kurtz (cryptocurrency &amp; securities law)</div></div>
+        <div class="cred-row reveal"><div class="cred-dot"></div><div class="cred-text"><strong>AI Workflow Developer</strong> — Croke Fairchild Duarte &amp; Beres (Harvey platform, legal ops automation), June 2026–Present</div></div>
+        <div class="cred-row reveal"><div class="cred-dot"></div><div class="cred-text"><strong>Advanced Legislative Scorer</strong> — Brown University Center for Technological Responsibility, AISLE Project, Jan 2026–Present</div></div>
+        <div class="cred-row reveal"><div class="cred-dot"></div><div class="cred-text"><strong>Research Neuroscientist</strong> — Harvard Business School, Aug 2021–Dec 2024 · Yale Program for Psychedelic Science (Regulatory &amp; Compliance Consultant), Nov 2022–Apr 2024</div></div>
+        <div class="cred-row reveal"><div class="cred-dot"></div><div class="cred-text"><strong>Published contributor</strong> — Cannabis Law Report · Fat Nugs Magazine · Journal of Biophilic Design (Science Behind Series)</div></div>
+      </div> </div> </div>
+</section> <!-- ─── FAQ ─── -->
+<section class="section" id="faq"> <div class="wrap"> <div class="eyebrow">FAQ</div> <h2 class="title">Everything you need to know.</h2> <div class="faq-list"> <div class="faq-item"> <button class="faq-q" aria-expanded="false"> <span class="faq-q-text">Is Clerking legal? Won't this create unauthorized practice of law (UPL) issues?</span> <span class="faq-icon" aria-hidden="true">+</span> </button> <div class="faq-a"><div class="faq-a-inner">Yes, and it's specifically designed to avoid UPL issues. Clerking is a <strong>technology and matchmaking platform</strong> — not a legal services provider. Students work directly for the supervising attorney under a separate engagement agreement. All student work is supervised under <strong>ABA Model Rule 5.3</strong> (or your applicable state equivalent). Clerking never directs, instructs, or employs students for legal work — you do. This is the same supervision structure used across the legal industry for law clerks, paralegals, and legal assistants.</div></div> </div> <div class="faq-item"> <button class="faq-q" aria-expanded="false"> <span class="faq-q-text">Who supervises the students? What are my professional obligations?</span> <span class="faq-icon" aria-hidden="true">+</span> </button> <div class="faq-a"><div class="faq-a-inner">You do. Every Clerking engagement is a direct relationship between the supervising attorney and the law student. As the supervising attorney, you review all work product before use, in compliance with ABA Model Rule 5.3. Clerking provides a template engagement letter that formally documents the supervision relationship and independent contractor structure. You remain the professional of record at all times. The student produces a draft; you produce the work product.</div></div> </div> <div class="faq-item"> <button class="faq-q" aria-expanded="false"> <span class="faq-q-text">How are students vetted before they're matched with me?</span> <span class="faq-icon" aria-hidden="true">+</span> </button> <div class="faq-a"><div class="faq-a-inner">Students complete a detailed application, submit a legal writing sample, and pass a confidentiality screening before joining the Clerking network. We verify current law school enrollment, bar exam eligibility timeline, and practice area interest. You receive a profile including their school, class year, focus areas, and writing sample before any match is confirmed. You can decline any match before work begins — no explanation required.</div></div> </div> <div class="faq-item"> <button class="faq-q" aria-expanded="false"> <span class="faq-q-text">What practice areas can students support?</span> <span class="faq-icon" aria-hidden="true">+</span> </button> <div class="faq-a"><div class="faq-a-inner">Litigation, transactional, IP, <strong>cannabis and regulatory</strong>, criminal defense, family law, and general civil research. The cannabis, psychedelics, and regulatory student pool is a particular strength — we specifically recruit and train students with deep interest in emerging regulatory practice. Regulatory-specific templates, scheduling analyses, and state-by-state compliance checklists are included in the student resource library and inform the quality of their work from day one.</div></div> </div> <div class="faq-item"> <button class="faq-q" aria-expanded="false"> <span class="faq-q-text">How does payment work? Do I pay Clerking or the student?</span> <span class="faq-icon" aria-hidden="true">+</span> </button> <div class="faq-a"><div class="faq-a-inner"><strong>Both, separately.</strong> You pay Clerking your subscription fee (or one-time posting fee) through Stripe — this covers matchmaking access. You pay the student directly at your agreed hourly rate ($30–45/hr is typical) based on the invoices they submit to you. Clerking is <strong>never in the student payment chain</strong>. This separation is structural: it's a core part of how the compliance framework functions and is documented in your engagement letter with the student.</div></div> </div> <div class="faq-item"> <button class="faq-q" aria-expanded="false"> <span class="faq-q-text">Can I cancel my subscription anytime?</span> <span class="faq-icon" aria-hidden="true">+</span> </button> <div class="faq-a"><div class="faq-a-inner">Yes. All plans are month-to-month with no long-term commitment. You can cancel anytime through your Stripe dashboard. Active clerk engagements will continue through the terms set in your engagement letter with the student — Clerking doesn't interfere with in-progress work relationships.</div></div> </div> <div class="faq-item"> <button class="faq-q" aria-expanded="false"> <span class="faq-q-text">What if the match isn't the right fit?</span> <span class="faq-icon" aria-hidden="true">+</span> </button> <div class="faq-a"><div class="faq-a-inner">Reach out within the first two weeks. We'll rematch you at no additional charge. Our goal is a match that actually works — we'd rather take the time to get it right than lose you. If a specific practice area focus, student year, communication style, or turnaround expectation isn't landing, tell us specifically and we'll adjust.</div></div> </div> <div class="faq-item"> <button class="faq-q" aria-expanded="false"> <span class="faq-q-text">Are students required to sign confidentiality agreements?</span> <span class="faq-icon" aria-hidden="true">+</span> </button> <div class="faq-a"><div class="faq-a-inner">Yes. Students sign a confidentiality and work product agreement as part of every engagement — included in the Clerking engagement letter template provided to all subscribers. The agreement covers: client confidentiality, attorney-client privilege protection, work product ownership (assigned to the attorney), conflict-of-interest acknowledgment, and independent contractor status.</div></div> </div> <div class="faq-item"> <button class="faq-q" aria-expanded="false"> <span class="faq-q-text">What if the match isn't working in the first two weeks?</span> <span class="faq-icon" aria-hidden="true">+</span> </button> <div class="faq-a"><div class="faq-a-inner">Reach out within the first two weeks and we'll rematch you at no additional charge. Our goal is a match that works — we'd rather take the time to get it right. If a specific practice area focus, student year, or communication style isn't landing, tell us specifically and we'll adjust.</div></div> </div> <div class="faq-item"> <button class="faq-q" aria-expanded="false"> <span class="faq-q-text">Can I use Clerking for both one-off projects and ongoing overflow?</span> <span class="faq-icon" aria-hidden="true">+</span> </button> <div class="faq-a"><div class="faq-a-inner">Absolutely — that's exactly what both tracks are designed for. The <strong>single posting ($350)</strong> is for a specific project with a defined scope, deliverable, and timeline. <strong>Subscriptions</strong> (Starter / Pro / Elite) are for ongoing overflow capacity, giving you continuous access to clerk support as your workload fluctuates. Many attorneys start with a single posting to test the quality, then move to a subscription.</div></div> </div> </div> </div>
+</section> <hr class="hr"> <!-- ─── CTA SECTION ─── -->
+<section class="cta-section"> <div class="cta-grid"> <div class="cta-card"> <h3>Join founding cohort</h3> <p>Post your first need in minutes. We'll match you with a vetted, confidentiality-trained law student within 24–48 hours — or same day on Elite. No commitment to start.</p> <a href="mailto:rn@rncollins.com?subject=Clerking — Attorney Inquiry" class="btn-white">Claim your founding spot →</a> </div> <div class="cta-card"> <h3>Join as a student</h3> <p>Apply to the Clerking student network. Get full resource library access, the attorney job board, and paid placements starting at $30–45/hr. First month free for Northeastern students.</p> <a href="mailto:rn@rncollins.com?subject=Clerking — Student Waitlist" class="btn-outline-white">Join the waitlist →</a> </div> </div>
+</section> <!-- ─── FOOTER ─── -->
+<footer> <div class="footer-inner"> <div class="footer-brand"> <span class="footer-logo">Clerking</span> <p>A brand of RN Collins / Rayven-Nikkita Collins LLC.<br>Northeastern University School of Law, 1L.<br> <a href="https://rncollins.com">rncollins.com</a> · <a href="mailto:rn@rncollins.com">rn@rncollins.com</a></p> </div> <div class="footer-links-col"> <h4>For attorneys</h4> <a href="#attorneys">How it works</a> <a href="#what-clerks-do">What clerks do</a> <a href="#pricing">Pricing</a> <a href="#faq">FAQ</a> </div> <div class="footer-links-col"> <h4>For students</h4> <a href="#students">Membership tiers</a> <a href="#students">Resource library</a> <a href="mailto:rn@rncollins.com?subject=Clerking — Student Waitlist">Join waitlist</a> </div> <div class="footer-links-col"> <h4>RN Collins</h4> <a href="https://rncollins.com">Main site</a> <a href="https://rncollins.com/set-for">Set for Life</a> <a href="https://rncollins.com/aloha-ai-consulting">Aloha AI Consulting</a> <a href="https://rncollins.com/unregulated">Unregulated</a> <a href="https://rncollins.com/nsag">NSAG</a> </div> </div> <div class="footer-bottom"> Clerking is a technology and matchmaking platform operated by Rayven-Nikkita Collins LLC (DBA Clerking). Clerking is not a law firm and does not provide legal services, legal advice, or attorney-client relationships. All student work is performed under the direct supervision of the hiring attorney pursuant to a separate engagement agreement, in compliance with ABA Model Rule 5.3 or applicable state equivalent. Nothing on this website constitutes legal advice. Use of the Clerking platform is subject to our Terms of Service. &copy; 2026 Rayven-Nikkita Collins. All rights reserved. </div>
+</footer> <script>
+// ── IntersectionObserver for scroll reveals ──
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+// ── Stat counter animation ──
+const countObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    const el = entry.target;
+    const text = el.textContent;
+    const num = parseFloat(text.replace(/[^0-9.]/g, ''));
+    if (isNaN(num) || num === 0) return;
+    const suffix = text.replace(/[0-9.]/g, '');
+    let start = 0;
+    const duration = 1200;
+    const step = 16;
+    const increment = num / (duration / step);
+    const timer = setInterval(() => {
+      start += increment;
+      if (start >= num) { start = num; clearInterval(timer); }
+      el.textContent = (text.includes('.') ? start.toFixed(1) : Math.floor(start)) + suffix;
+    }, step);
+    countObserver.unobserve(el);
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('.stat-num').forEach(el => countObserver.observe(el));
+
+// ── Annual billing toggle ──
+let isAnnual = false;
+function toggleBilling() {
+  isAnnual = !isAnnual;
+  const toggle = document.getElementById('billing-toggle');
+  const note = document.getElementById('annual-note');
+  const mLabel = document.getElementById('monthly-label');
+  const aLabel = document.getElementById('annual-label');
+  toggle.classList.toggle('on', isAnnual);
+  note.classList.toggle('show', isAnnual);
+  mLabel.classList.toggle('active', !isAnnual);
+  aLabel.classList.toggle('active', isAnnual);
+
+  const displays = [
+    { id: 'price-starter', monthly: 149, annual: 1241, annualLabel: '$103/mo' },
+    { id: 'price-pro', monthly: 249, annual: 2490, annualLabel: '$208/mo' },
+    { id: 'price-elite', monthly: 399, annual: 3990, annualLabel: '$333/mo' },
+  ];
+  displays.forEach(p => {
+    const el = document.getElementById(p.id);
+    if (!el) return;
+    const disp = el.querySelector('.price-display');
+    const period = el.querySelector('.price-period');
+    if (isAnnual) {
+      disp.textContent = p.annualLabel;
+      period.textContent = ' billed annually';
+    } else {
+      disp.textContent = '$' + p.monthly;
+      period.textContent = '/mo';
+    }
+  });
+  document.querySelectorAll('.annual-price').forEach(el => {
+    el.style.display = isAnnual ? 'block' : 'none';
+  });
+}
+
+// ── FAQ accordion ──
+document.querySelectorAll('.faq-q').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var item=btn.closest('.faq-item');
+    var ans=item.querySelector('.faq-a');
+    var isOpen=item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(function(i){
+      i.classList.remove('open');
+      i.querySelector('.faq-a').style.maxHeight='0';
+      i.querySelector('.faq-q').setAttribute('aria-expanded','false');
+    });
+    if(!isOpen){
+      item.classList.add('open');
+      ans.style.maxHeight=ans.scrollHeight+'px';
+      btn.setAttribute('aria-expanded','true');
+    }
+  });
+});
+
+// ── Smooth scroll for nav links ──
+document.querySelectorAll('a[href^="#"]').forEach(function(a){
+  a.addEventListener('click',function(e){
+    var target=document.querySelector(a.getAttribute('href'));
+    if(target){
+      e.preventDefault();
+      target.scrollIntoView({behavior:'smooth',block:'start'});
+    }
+  });
+});
+</script>
+</body>
+</html>

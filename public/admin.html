@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clerking Analytics</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --red: #6B2937; --red-light: #f5edef;
+    --dk: #1C1B1F; --md: #4B5563; --lt: #9CA3AF;
+    --bg: #F6F3EC; --white: #ffffff;
+    --green: #16a34a; --amber: #d97706; --blue: #1d4ed8;
+    --border: #E5E7EB;
+    --font-display: 'Georgia', serif;
+    --font-ui: 'Arial', sans-serif;
+  }
+  body { font-family: var(--font-ui); background: var(--bg); color: var(--dk); min-height: 100vh; }
+
+  /* LOGIN */
+  #login-screen { display:flex; align-items:center; justify-content:center; min-height:100vh; }
+  .login-card { background:var(--white); border:1px solid var(--border); border-radius:12px; padding:40px; width:360px; text-align:center; }
+  .login-card h1 { font-family:var(--font-display); font-size:22px; color:var(--red); margin-bottom:8px; }
+  .login-card p  { color:var(--lt); font-size:13px; margin-bottom:24px; }
+  .login-card input { width:100%; border:1px solid var(--border); border-radius:8px; padding:10px 14px; font-size:14px; margin-bottom:12px; outline:none; }
+  .login-card input:focus { border-color:var(--red); }
+  .login-card button { width:100%; background:var(--red); color:#fff; border:none; border-radius:8px; padding:11px; font-size:14px; font-weight:600; cursor:pointer; }
+  #login-error { color:#dc2626; font-size:12px; margin-top:8px; display:none; }
+
+  /* MAIN */
+  #app { display:none; }
+  header { background:var(--white); border-bottom:1px solid var(--border); padding:14px 24px; display:flex; align-items:center; gap:16px; position:sticky; top:0; z-index:100; }
+  .logo { font-family:var(--font-display); font-size:18px; color:var(--red); font-weight:700; }
+  .logo span { color:var(--lt); font-size:13px; font-weight:400; margin-left:6px; }
+  .refresh-btn { margin-left:auto; background:var(--red); color:#fff; border:none; border-radius:6px; padding:6px 14px; font-size:13px; cursor:pointer; }
+  .last-updated { color:var(--lt); font-size:12px; }
+  .status-dot { width:8px; height:8px; border-radius:50%; background:var(--green); display:inline-block; margin-right:4px; }
+
+  main { max-width:1300px; margin:0 auto; padding:24px 20px; }
+
+  /* GRID */
+  .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px; }
+  .grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin-bottom:16px; }
+  .grid-4 { display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:16px; margin-bottom:16px; }
+  @media(max-width:900px) { .grid-3,.grid-4 { grid-template-columns:1fr 1fr; } }
+  @media(max-width:600px) { .grid-2,.grid-3,.grid-4 { grid-template-columns:1fr; } }
+
+  /* CARDS */
+  .card { background:var(--white); border:1px solid var(--border); border-radius:10px; padding:20px; }
+  .card-title { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--lt); margin-bottom:12px; }
+  .section-header { font-size:13px; font-weight:700; color:var(--red); margin:24px 0 12px; display:flex; align-items:center; gap:8px; }
+  .section-header::after { content:''; flex:1; height:1px; background:var(--border); }
+
+  /* BIG NUMBERS */
+  .stat-big { font-size:36px; font-weight:700; color:var(--dk); line-height:1; }
+  .stat-label { font-size:12px; color:var(--lt); margin-top:4px; }
+  .stat-delta { font-size:12px; margin-top:4px; }
+  .up   { color:var(--green); } .down { color:#dc2626; } .flat { color:var(--amber); }
+
+  /* TABLES */
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  th { text-align:left; font-size:11px; text-transform:uppercase; letter-spacing:.05em; color:var(--lt); padding:6px 8px; border-bottom:1px solid var(--border); }
+  td { padding:8px 8px; border-bottom:1px solid #f3f4f6; color:var(--md); vertical-align:top; }
+  tr:last-child td { border-bottom:none; }
+  .pill { display:inline-block; padding:2px 8px; border-radius:20px; font-size:11px; font-weight:600; }
+  .pill-green { background:#dcfce7; color:#15803d; }
+  .pill-amber { background:#fef3c7; color:#92400e; }
+  .pill-red   { background:#fee2e2; color:#991b1b; }
+  .pill-blue  { background:#dbeafe; color:#1e40af; }
+  .pill-grey  { background:#f3f4f6; color:#6b7280; }
+
+  /* MINI BARS */
+  .bar-row { display:flex; align-items:center; gap:8px; margin-bottom:6px; font-size:12px; }
+  .bar-row .label { width:120px; color:var(--md); flex-shrink:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .bar-row .bar-track { flex:1; background:#f3f4f6; border-radius:4px; height:8px; overflow:hidden; }
+  .bar-row .bar-fill  { height:100%; background:var(--red); border-radius:4px; transition:width .5s; }
+  .bar-row .val  { font-size:11px; color:var(--lt); width:32px; text-align:right; flex-shrink:0; }
+
+  /* FUNNEL */
+  .funnel-step { display:flex; align-items:center; gap:12px; margin-bottom:8px; }
+  .funnel-label { font-size:12px; color:var(--md); width:120px; }
+  .funnel-count { font-size:16px; font-weight:700; color:var(--dk); width:60px; }
+  .funnel-pct   { font-size:11px; color:var(--lt); }
+
+  /* HEATMAP-STYLE GRID */
+  .hour-grid { display:grid; grid-template-columns:repeat(24,1fr); gap:2px; margin-top:8px; }
+  .hour-cell { height:20px; border-radius:3px; background:#f3f4f6; position:relative; cursor:default; }
+  .hour-cell[title]:hover::after { content:attr(title); position:absolute; bottom:calc(100% + 4px); left:50%; transform:translateX(-50%); background:#1c1b1f; color:#fff; font-size:10px; padding:3px 6px; border-radius:4px; white-space:nowrap; z-index:10; }
+  .day-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:4px; margin-top:8px; }
+  .day-cell { padding:8px 4px; border-radius:6px; background:#f3f4f6; text-align:center; font-size:11px; color:var(--md); }
+
+  /* PIPELINE */
+  .pipeline-row { display:flex; gap:4px; margin-top:12px; overflow-x:auto; }
+  .pipeline-stage { flex:1; min-width:80px; background:#f9fafb; border:1px solid var(--border); border-radius:8px; padding:10px 8px; text-align:center; }
+  .pipeline-stage .cnt { font-size:22px; font-weight:700; color:var(--dk); }
+  .pipeline-stage .stg { font-size:10px; color:var(--lt); text-transform:uppercase; letter-spacing:.05em; margin-top:2px; }
+
+  /* A/B TABLE */
+  .ab-winner { background:#f0fdf4; }
+  .ab-control { background:#fafafa; }
+
+  /* LOADING */
+  .loading { text-align:center; padding:60px; color:var(--lt); }
+  .spinner { display:inline-block; width:32px; height:32px; border:3px solid #f3f4f6; border-top-color:var(--red); border-radius:50%; animation:spin .8s linear infinite; margin-bottom:12px; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+
+  /* LEAD TABLE */
+  .lead-email  { font-weight:600; color:var(--dk); }
+  .lead-type   { font-size:11px; color:var(--lt); }
+  .lead-source { }
+  .lead-quality-high   { color:var(--green); }
+  .lead-quality-medium { color:var(--amber); }
+  .lead-quality-low    { color:var(--lt); }
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-card">
+    <h1>Clerking Analytics</h1>
+    <p>Protected — RN Collins only</p>
+    <input type="password" id="api-key" placeholder="Admin key" autocomplete="current-password">
+    <button onclick="login()">Enter</button>
+    <div id="login-error">Incorrect key. Try again.</div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="app">
+  <header>
+    <div class="logo">Clerking <span>Analytics Dashboard</span></div>
+    <span class="status-dot" id="status-dot"></span>
+    <span class="last-updated" id="last-updated">Loading…</span>
+    <button class="refresh-btn" onclick="loadData()">↻ Refresh</button>
+  </header>
+
+  <main>
+    <div id="dashboard-content">
+      <div class="loading"><div class="spinner"></div><br>Loading analytics…</div>
+    </div>
+  </main>
+</div>
+
+<script>
+let apiKey = '';
+
+function login() {
+  const k = document.getElementById('api-key').value.trim();
+  if (!k) return;
+  apiKey = k;
+  loadData();
+}
+document.getElementById('api-key').addEventListener('keydown', e => { if (e.key==='Enter') login(); });
+
+async function loadData() {
+  try {
+    const r = await fetch(`/api/analytics?key=${encodeURIComponent(apiKey)}`);
+    if (r.status === 401) {
+      document.getElementById('login-error').style.display = 'block';
+      return;
+    }
+    const d = await r.json();
+    document.getElementById('login-error').style.display = 'none';
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    document.getElementById('last-updated').textContent = 'Updated ' + new Date(d.generated).toLocaleTimeString();
+    document.getElementById('status-dot').style.background = '#16a34a';
+    renderDashboard(d);
+  } catch(err) {
+    document.getElementById('status-dot').style.background = '#dc2626';
+    document.getElementById('last-updated').textContent = 'Error loading data';
+  }
+}
+
+function pct(num, denom) { return denom > 0 ? ((num/denom)*100).toFixed(1)+'%' : '—'; }
+function dollar(n) { return '$' + (n||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function bar(label, val, max, suffix='') {
+  const w = max > 0 ? Math.round((val/max)*100) : 0;
+  return `<div class="bar-row"><span class="label">${label}</span><div class="bar-track"><div class="bar-fill" style="width:${w}%"></div></div><span class="val">${val}${suffix}</span></div>`;
+}
+
+function renderDashboard(d) {
+  const {
+    s1_traffic: t1, s2_conversion: t2, s3_engagement: t3,
+    s4_content: t4, s5_revenue: t5, s7_leadIntel: t7,
+    s8_seo: t8, s9_errors: t9, s11_audience: t11,
+    s12_ab: t12, s13_trends: t13, s14_ops: t14
+  } = d;
+
+  // Daily sparkline data
+  const days30 = Object.entries(t1.dailyPageviews || {}).slice(-30);
+  const leads30 = Object.entries(t2.dailyLeads || {}).slice(-30);
+  const maxPV = Math.max(...days30.map(x=>x[1]), 1);
+  const maxL  = Math.max(...leads30.map(x=>x[1]), 1);
+
+  const sparkline = (entries, max, color='#6B2937') => {
+    const pts = entries.map(([,v],i) => {
+      const x = (i / (entries.length-1)) * 200;
+      const y = 30 - (v/max*28);
+      return `${x},${y}`;
+    }).join(' ');
+    return `<svg width="200" height="32" viewBox="0 0 200 32" fill="none"><polyline points="${pts}" stroke="${color}" stroke-width="1.5" fill="none"/></svg>`;
+  };
+
+  // Pipeline stages
+  const pipelineStages = ['new','contacted','in_conversation','proposal','client','won','lost'];
+  const pipelineColors = {new:'pill-blue',contacted:'pill-amber',in_conversation:'pill-amber',proposal:'pill-amber',client:'pill-green',won:'pill-green',lost:'pill-red'};
+
+  // A/B test rows
+  const abRows = (testName) => {
+    const data = t12[testName] || {};
+    const variants = Object.entries(data);
+    const maxCvr = Math.max(...variants.map(([,v])=>parseFloat(v.conversionRate)||0));
+    return variants.map(([v,stats]) => {
+      const cvr = parseFloat(stats.conversionRate) || 0;
+      const isWinner = cvr === maxCvr && cvr > 0;
+      return `<tr class="${isWinner?'ab-winner':v==='control'?'ab-control':''}">
+        <td>${v}${isWinner?' 🏆':''}</td>
+        <td>${(stats.impressions||0).toLocaleString()}</td>
+        <td>${(stats.conversions||0).toLocaleString()}</td>
+        <td>${stats.conversionRate||'N/A'}</td>
+      </tr>`;
+    }).join('');
+  };
+
+  // Hour heatmap
+  const hourMax = Math.max(...Object.values(t13.leadsByHour||{}), 1);
+  const hourCells = Array.from({length:24},(_,h) => {
+    const v = t13.leadsByHour?.[h] || 0;
+    const intensity = Math.round((v/hourMax)*255);
+    const bg = v > 0 ? `rgba(107,41,55,${v/hourMax})` : '#f3f4f6';
+    return `<div class="hour-cell" style="background:${bg}" title="${h}:00 — ${v} leads"></div>`;
+  }).join('');
+
+  // Day cells
+  const dayLabels = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const dayMax = Math.max(...Object.values(t13.leadsByDay||{}), 1);
+  const dayCells = dayLabels.map((lbl, i) => {
+    const key = ['sun','mon','tue','wed','thu','fri','sat'][i];
+    const v = t13.leadsByDay?.[key] || 0;
+    const bg = v > 0 ? `rgba(107,41,55,${v/dayMax*0.9+0.1})` : '#f3f4f6';
+    const txtColor = v/dayMax > 0.5 ? '#fff' : '#4b5563';
+    return `<div class="day-cell" style="background:${bg};color:${txtColor}">${lbl}<br><strong>${v}</strong></div>`;
+  }).join('');
+
+  // Recent leads table
+  const recentLeadsRows = (t7.recentLeads||[]).slice(-10).reverse().map(l => `<tr>
+    <td><span class="lead-email">${l.name||'—'}</span><br><span class="lead-type">${l.email||'—'}</span></td>
+    <td><span class="pill pill-grey">${(l.formType||'unknown').replace(/_/g,' ')}</span></td>
+    <td>${l.trafficSource||'—'}</td>
+    <td><span class="pill ${l.pipelineStatus==='client'?'pill-green':l.pipelineStatus==='new'?'pill-blue':'pill-amber'}">${l.pipelineStatus||'new'}</span></td>
+    <td style="color:var(--lt);font-size:11px">${(l.timestamp||'').slice(0,10)}</td>
+  </tr>`).join('');
+
+  // Revenue table
+  const revenueRows = Object.entries(t5.revenueByProduct||{}).map(([p,amt]) =>
+    `<tr><td>${p.replace(/_/g,' ')}</td><td>${dollar(amt)}</td></tr>`).join('') || '<tr><td colspan="2" style="color:var(--lt)">No revenue recorded yet</td></tr>';
+
+  // Scroll depth bars
+  const scrollMax = Math.max(...Object.values(t3.scrollDepth||{}), 1);
+  const scrollBars = [25,50,75,100].map(pct =>
+    bar(`${pct}% scroll`, t3.scrollDepth?.[pct]||0, scrollMax, ' visitors')).join('');
+
+  // CTA click bars
+  const ctaMax = Math.max(...Object.values(t3.ctaClicks||{}), 1);
+  const ctaBars = Object.entries(t3.ctaClicks||{}).sort((a,b)=>b[1]-a[1]).slice(0,6).map(([k,v]) =>
+    bar(k.replace(/_/g,' '), v, ctaMax)).join('');
+
+  // Traffic source bars
+  const srcMax = Math.max(...Object.values(t1.pvBySource||{}), 1);
+  const srcBars = Object.entries(t1.pvBySource||{}).sort((a,b)=>b[1]-a[1]).map(([k,v]) =>
+    bar(k, v, srcMax)).join('');
+
+  // Device bars
+  const devMax = Math.max(...Object.values(t1.pvByDevice||{}), 1);
+  const devBars = Object.entries(t1.pvByDevice||{}).map(([k,v]) => bar(k, v, devMax)).join('');
+
+  // Errors summary
+  const errTotal = (t9.errors?.js||0) + (t9.errors?.form||0) + (t9.errors?.api||0);
+  const errBadge = errTotal > 0 ? `<span class="pill pill-red">${errTotal} errors</span>` : `<span class="pill pill-green">No errors</span>`;
+
+  // Content pages
+  const pgMax = Math.max(...Object.values(t4.pageViews||{}), 1);
+  const pgBars = Object.entries(t4.pageViews||{}).sort((a,b)=>b[1]-a[1]).map(([k,v]) =>
+    bar('/'+k.replace(/_/g,'/'), v, pgMax)).join('');
+
+  document.getElementById('dashboard-content').innerHTML = `
+
+    <!-- ══ SECTION 1 + 2: HEADLINE STATS ══════════════════════════════════════ -->
+    <div class="section-header">§1–2 · Traffic &amp; Conversion</div>
+    <div class="grid-4">
+      <div class="card">
+        <div class="card-title">Total Pageviews</div>
+        <div class="stat-big">${(t1.totalPageviews||0).toLocaleString()}</div>
+        <div style="margin-top:8px">${sparkline(days30, maxPV)}</div>
+        <div class="stat-label">Top source: <strong>${t1.topSource||'—'}</strong></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Total Leads</div>
+        <div class="stat-big">${(t2.totalLeads||0).toLocaleString()}</div>
+        <div style="margin-top:8px">${sparkline(leads30, maxL, '#1d4ed8')}</div>
+        <div class="stat-label">Conversion rate: <strong>${t2.conversionRate}</strong></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Repeat Inquiries</div>
+        <div class="stat-big">${t14.repeatInquiries||0}</div>
+        <div class="stat-label">Rate: <strong>${t14.repeatRate}</strong> of all leads</div>
+        <div class="stat-label" style="margin-top:4px">High-intent signal — same email, multiple submissions</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Avg Session</div>
+        <div class="stat-big">${t3.avgSessionSec||0}<span style="font-size:16px;color:var(--lt)">s</span></div>
+        <div class="stat-label">Top CTA: <strong>${(t3.topCta||'none').replace(/_/g,' ')}</strong></div>
+        <div class="stat-label" style="margin-top:4px">Total CTA clicks: ${(t3.totalCtaClicks||0).toLocaleString()}</div>
+      </div>
+    </div>
+
+    <!-- ══ SECTION 2: CONVERSION FUNNEL ══════════════════════════════════════ -->
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">§2 · Conversion Funnel</div>
+        <div class="funnel-step">
+          <div class="funnel-label">1. Page load</div>
+          <div class="funnel-count">${(t2.funnel?.pageviews||0).toLocaleString()}</div>
+          <div class="funnel-pct">100%</div>
+        </div>
+        <div class="funnel-step">
+          <div class="funnel-label">2. Form opened</div>
+          <div class="funnel-count">${(t2.funnel?.formOpens||0).toLocaleString()}</div>
+          <div class="funnel-pct">${t2.formOpenRate}</div>
+        </div>
+        <div class="funnel-step">
+          <div class="funnel-label">3. Form submitted</div>
+          <div class="funnel-count">${(t2.funnel?.formSubmits||0).toLocaleString()}</div>
+          <div class="funnel-pct">${t2.formSubmitRate} of opens</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">§2 · Leads by Type</div>
+        ${Object.entries(t2.leadsByType||{}).map(([k,v]) =>
+          bar(k.replace(/_/g,' '), v, Math.max(...Object.values(t2.leadsByType||{}),1))).join('')}
+      </div>
+    </div>
+
+    <!-- ══ SECTION 1: TRAFFIC SOURCES ════════════════════════════════════════ -->
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">§1 · Traffic Sources (Pageviews)</div>
+        ${srcBars}
+      </div>
+      <div class="card">
+        <div class="card-title">§1 · Leads by Source</div>
+        ${Object.entries(t2.leadsBySource||{}).map(([k,v]) =>
+          bar(k, v, Math.max(...Object.values(t2.leadsBySource||{}),1))).join('')}
+      </div>
+    </div>
+
+    <!-- ══ SECTION 3: ENGAGEMENT ═══════════════════════════════════════════ -->
+    <div class="section-header">§3 · Engagement &amp; Behavioral</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Scroll Depth — Clerking Main Page</div>
+        ${scrollBars}
+        <div style="color:var(--lt);font-size:11px;margin-top:8px">Each milestone is unique visitors who reached that depth</div>
+      </div>
+      <div class="card">
+        <div class="card-title">CTA Click Breakdown</div>
+        ${ctaBars || '<div style="color:var(--lt);font-size:12px">No clicks recorded yet. Add data-cta attributes to your CTA buttons.</div>'}
+      </div>
+    </div>
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-title">Feature Interactions</div>
+        ${Object.entries(t3.features||{}).map(([k,v]) =>
+          `<div class="bar-row"><span class="label">${k.replace(/:/g,' ')}</span><span class="val">${v}</span></div>`).join('')
+          || '<div style="color:var(--lt);font-size:12px">No feature events yet</div>'}
+      </div>
+      <div class="card">
+        <div class="card-title">New vs. Returning Visitors</div>
+        ${bar('New visitors', t1.pvByVisitor?.new||0, Math.max(t1.pvByVisitor?.new||0, t1.pvByVisitor?.returning||0, 1))}
+        ${bar('Returning', t1.pvByVisitor?.returning||0, Math.max(t1.pvByVisitor?.new||0, t1.pvByVisitor?.returning||0, 1))}
+        <div style="color:var(--lt);font-size:11px;margin-top:8px">Returning = visited at least once before</div>
+      </div>
+      <div class="card">
+        <div class="card-title">§4 · Page Performance</div>
+        ${pgBars || '<div style="color:var(--lt);font-size:12px">No page view data yet. analytics.js must be loaded on each page.</div>'}
+      </div>
+    </div>
+
+    <!-- ══ SECTION 5: REVENUE ══════════════════════════════════════════════ -->
+    <div class="section-header">§5 · Revenue &amp; Products</div>
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-title">Total Revenue (All Time)</div>
+        <div class="stat-big">${dollar(t5.totalRevenue)}</div>
+        <div class="stat-label">${(Object.values(t5.revenueByProduct||{})).length} product(s)</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Revenue by Product</div>
+        <table><thead><tr><th>Product</th><th>Revenue</th></tr></thead><tbody>${revenueRows}</tbody></table>
+      </div>
+      <div class="card">
+        <div class="card-title">§5 · Platform Waitlist</div>
+        <div class="stat-big">${(t5.waitlistCount||0).toLocaleString()}</div>
+        <div class="stat-label">Pre-launch signups for post-bar placement platform</div>
+        <div style="margin-top:12px;color:var(--lt);font-size:12px">
+          Embed the waitlist form at /api/waitlist on your Clerking page footer.
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SECTION 7: LEAD INTELLIGENCE ═══════════════════════════════════ -->
+    <div class="section-header">§7 · Lead Intelligence &amp; Pipeline</div>
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-title">Pipeline Status</div>
+      <div class="pipeline-row">
+        ${pipelineStages.map(s => `<div class="pipeline-stage">
+          <div class="cnt">${t7.pipeline?.[s]||0}</div>
+          <div class="stg">${s.replace(/_/g,' ')}</div>
+        </div>`).join('')}
+      </div>
+      <div style="font-size:11px;color:var(--lt);margin-top:12px">Update pipeline status via Upstash → set <code>clerking:leads:{type}:{ts}</code> pipelineStatus field.</div>
+    </div>
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-title">Recent Leads</div>
+      <div style="overflow-x:auto">
+        <table>
+          <thead><tr><th>Name / Email</th><th>Type</th><th>Source</th><th>Pipeline</th><th>Date</th></tr></thead>
+          <tbody>${recentLeadsRows || '<tr><td colspan="5" style="color:var(--lt)">No leads yet</td></tr>'}</tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ══ SECTION 8: SEO ══════════════════════════════════════════════════ -->
+    <div class="section-header">§8 · SEO (Google Search Console)</div>
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-title">Search Console Integration</div>
+      <div style="color:var(--lt);font-size:13px;line-height:1.7">
+        Connect Google Search Console to populate impressions, clicks, average position, and top queries.<br>
+        <strong>Steps:</strong> (1) Go to <a href="https://search.google.com/search-console" target="_blank" style="color:var(--red)">search.google.com/search-console</a> → Add property → <code>rncollins.com/clerking</code>
+        → Verify via HTML meta tag or DNS. (2) Add <code>GSC_ACCESS_TOKEN</code> env var to Vercel.
+        (3) The analytics.js endpoint will auto-populate this section with impressions, clicks, average position, and top-performing queries.
+      </div>
+    </div>
+
+    <!-- ══ SECTION 9: PERFORMANCE + ERRORS ════════════════════════════════ -->
+    <div class="section-header">§9 · Performance &amp; Error Tracking</div>
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-title">Error Summary ${errBadge}</div>
+        ${bar('JS errors',   t9.errors?.js||0,   Math.max(t9.errors?.js||0, t9.errors?.form||0, t9.errors?.api||0, 1))}
+        ${bar('Form errors', t9.errors?.form||0, Math.max(t9.errors?.js||0, t9.errors?.form||0, t9.errors?.api||0, 1))}
+        ${bar('API errors',  t9.errors?.api||0,  Math.max(t9.errors?.js||0, t9.errors?.form||0, t9.errors?.api||0, 1))}
+      </div>
+      <div class="card">
+        <div class="card-title">Recent JS Errors</div>
+        ${(t9.recentJsErrors||[]).slice(0,5).map(e =>
+          `<div style="font-size:11px;color:#dc2626;margin-bottom:8px;padding:6px;background:#fef2f2;border-radius:4px;word-break:break-all">${(e.message||'').slice(0,120)}<br><span style="color:var(--lt)">${e.url||''} · ${(e.timestamp||'').slice(0,10)}</span></div>`
+        ).join('') || '<div style="color:var(--lt);font-size:12px">No JS errors recorded ✓</div>'}
+      </div>
+      <div class="card">
+        <div class="card-title">Uptime Monitoring</div>
+        <div style="color:var(--lt);font-size:13px;line-height:1.7">
+          Ping endpoint: <code>/api/health</code><br>
+          <strong>Setup:</strong> Register at <a href="https://uptimerobot.com" target="_blank" style="color:var(--red)">UptimeRobot.com</a> (free) → New Monitor → HTTPS → <code>https://rncollins.com/clerking/api/health</code> → every 5 min → alert to rayven.nikkita.collins@gmail.com.
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SECTION 11: AUDIENCE ════════════════════════════════════════════ -->
+    <div class="section-header">§11 · Audience</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Device Breakdown (Pageviews)</div>
+        ${devBars}
+        <div style="margin-top:12px;border-top:1px solid var(--border);padding-top:12px">
+          <div class="card-title">Leads by Device</div>
+          ${Object.entries(t2.leadsByDevice||{}).map(([k,v]) =>
+            bar(k, v, Math.max(...Object.values(t2.leadsByDevice||{}),1))).join('')}
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Demographic &amp; Geographic Signals</div>
+        <div style="color:var(--lt);font-size:13px;line-height:1.7">
+          <strong>GA4 Demographics:</strong> Age, gender, and interest signals populate automatically once GA4 is connected (add <code>NEXT_PUBLIC_GA4_ID</code> to Vercel env vars and set <code>window.__CLERKING_GA4_ID</code> in your page).<br><br>
+          <strong>Geographic:</strong> Country-level data available via IP in Vercel logs and GA4. City-level available in GA4 after ~500 sessions.
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SECTION 12: A/B TESTING ═════════════════════════════════════════ -->
+    <div class="section-header">§12 · A/B Testing</div>
+    <div class="grid-2">
+      ${['cta_copy','headline','form_length','pricing_display'].map(testName => `
+        <div class="card">
+          <div class="card-title">${testName.replace(/_/g,' ')} test</div>
+          <table>
+            <thead><tr><th>Variant</th><th>Impressions</th><th>Conversions</th><th>CVR</th></tr></thead>
+            <tbody>${abRows(testName)}</tbody>
+          </table>
+        </div>
+      `).join('')}
+    </div>
+    <div style="font-size:12px;color:var(--lt);margin-bottom:16px;padding:12px;background:var(--white);border:1px solid var(--border);border-radius:8px">
+      <strong>How A/B tests work:</strong> Visitor IDs are consistently hashed to variants — same visitor always sees the same variant. Conversions are recorded when a form is submitted by a visitor who saw a variant. Add <code>data-ab-cta</code> and <code>data-ab-headline</code> attributes to your HTML elements to enable live DOM swapping.
+    </div>
+
+    <!-- ══ SECTION 13: TIME-BASED TRENDS ══════════════════════════════════ -->
+    <div class="section-header">§13 · Time-Based Trends</div>
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-title">Lead Volume by Hour (UTC) — Peak hour: <strong>${t13.peakHour||'—'}:00</strong></div>
+      <div class="hour-grid">${hourCells}</div>
+      <div style="display:flex;gap:16px;margin-top:8px;font-size:11px;color:var(--lt)">
+        <span>0:00</span><span style="margin-left:auto">23:00</span>
+      </div>
+    </div>
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-title">Lead Volume by Day — Peak day: <strong>${(t13.peakDay||'—').toUpperCase()}</strong></div>
+      <div class="day-grid">${dayCells}</div>
+    </div>
+
+    <!-- ══ SECTION 14: OPERATIONAL ════════════════════════════════════════ -->
+    <div class="section-header">§14 · Operational</div>
+    <div class="grid-4">
+      <div class="card">
+        <div class="card-title">Total Leads (All Time)</div>
+        <div class="stat-big">${(t14.totalLeadsAllTime||0).toLocaleString()}</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Last 30 Days</div>
+        <div class="stat-big">${(t14.recentLeadCount_30d||0).toLocaleString()}</div>
+        <div class="stat-label">Avg ${t14.avgDailyLeads_30d||0}/day</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Repeat Inquiries</div>
+        <div class="stat-big">${t14.repeatInquiries||0}</div>
+        <div class="stat-label">${t14.repeatRate} repeat rate</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Email Analytics</div>
+        <div style="color:var(--lt);font-size:12px;line-height:1.7">
+          View in <a href="https://resend.com/emails" target="_blank" style="color:var(--red)">Resend dashboard</a>:<br>
+          · Open rates per send<br>
+          · Click rates (CTOR)<br>
+          · Unsubscribes<br>
+          · Bounce tracking
+        </div>
+      </div>
+    </div>
+
+    <div style="height:40px"></div>
+  `;
+}
+
+// Auto-refresh every 5 minutes
+setInterval(() => { if (apiKey) loadData(); }, 5 * 60 * 1000);
+</script>
+</body>
+</html>
