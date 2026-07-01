@@ -3,6 +3,8 @@
   "trailingSlash": false,
   "rewrites": [
     { "source": "/admin", "destination": "/admin.html" },
-    { "source": "/job-board", "destination": "/job-board.html" }
+    { "source": "/job-board", "destination": "/job-board.html" },
+    { "source": "/terms", "destination": "/terms.html" },
+    { "source": "/privacy", "destination": "/privacy.html" }
   ]
 }
