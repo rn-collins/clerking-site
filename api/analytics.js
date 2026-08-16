@@ -3,7 +3,11 @@
 // Protected by ADMIN_API_KEY query param or Authorization header
 
 export default async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Cache-Control', 'no-store');
+  res.setHeader('Vary', 'Origin');
+  res.setHeader('Access-Control-Allow-Origin', 'https://clerking-site.vercel.app');
+  if (req.headers.origin && req.headers.origin !== 'https://clerking-site.vercel.app') return res.status(403).json({ error: 'Origin not allowed' });
+  if (!process.env.ADMIN_API_KEY || !process.env.UPSTASH_REDIS_REST_URL || !process.env.UPSTASH_REDIS_REST_TOKEN) return res.status(503).json({ error: 'Operator analytics are not configured' });
 
   // ── AUTH ─────────────────────────────────────────────────────────────────────
   const key = req.query.key || req.headers.authorization?.replace('Bearer ','');
