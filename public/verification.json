@@ -1,19 +1,17 @@
 {
-  "buildId": "RN-B016",
-  "repairCard": "RR-016",
-  "canonical": "https://clerking-site.vercel.app",
-  "verifiedAt": "2026-08-15",
-  "status": "public prelaunch workflow lab",
-  "marketplaceOpen": false,
-  "checkoutOpen": false,
-  "membershipsOpen": false,
-  "jobBoardOpen": false,
-  "matchingOpen": false,
-  "liveDownloads": [
-    "/downloads/research-memo-workflow.md",
-    "/downloads/case-chronology-workflow.md",
-    "/downloads/contract-review-issue-log.md"
+  "build": "RN-B017",
+  "releaseReview": "RR-017",
+  "verifiedAt": "2026-08-20",
+  "releaseState": "public educational prototype",
+  "matchingActive": false,
+  "applicationsAccepted": false,
+  "paymentsProcessed": false,
+  "dataCollectionEndpoints": [],
+  "routes": [
+    "/",
+    "/job-board",
+    "/privacy",
+    "/terms"
   ],
-  "inquiryMode": "local email link",
-  "automatedEndpoint": "fail-closed until approved credentials exist"
+  "downloads": 3
 }

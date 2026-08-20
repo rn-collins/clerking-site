@@ -1,3 +1,5 @@
+> Version 1.1 · reviewed 20 August 2026 · educational workflow structure only. Use only within attorney-approved systems. Do not enter client identifiers or protected matter data into unapproved tools. The supervising attorney remains responsible for confidentiality, legal judgment, and final use.
+
 # Case Chronology Workflow
 
 **Educational work-organization framework — not legal advice, evidence authentication, or a substitute for attorney review.**
@@ -6,7 +8,7 @@
 |---|---|---|---|---|---|---|---|---|
 
 ## Source register
-| Source ID | Document/record | Custodian/origin | Date obtained | Range/page | Authenticity status | Restrictions |
+| Source ID | Document/record | Custodian/origin | Date obtained | Range/page | Authentication question/status—not a finding status | Restrictions |
 |---|---|---|---|---|---|---|
 
 ## Review gates

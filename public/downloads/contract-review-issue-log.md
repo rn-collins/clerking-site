@@ -1,3 +1,5 @@
+> Version 1.1 · reviewed 20 August 2026 · educational workflow structure only. Use only within attorney-approved systems. Do not enter client identifiers or protected matter data into unapproved tools. The supervising attorney remains responsible for confidentiality, legal judgment, and final use.
+
 # Contract Review Issue Log
 
 **Educational issue-spotting framework — not contract language, negotiation advice, or an approved legal position.**
